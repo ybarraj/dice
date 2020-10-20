@@ -2,35 +2,32 @@ import React, { Component } from 'react';
 import Die from './Die';
 
 class RollDice extends Component {
+    static defaultProps = {
+        sides: ["one", "two", "three", "four", "five", "six"]
+    }
+    constructor(props){
+        super(props);
+        this.state={
+            die1 : "one",
+            die2 : "one" 
+        }
+        this.roll = this.roll.bind(this);
+    }
+    roll() {
+        const newDie1 = this.props.sides[
+            Math.floor(Math.random() * this.props.sides.length)
+        ]; 
+        const newDie2 = this.props.sides[
+            Math.floor(Math.random() * this.props.sides.length)
+        ]; 
+        this.setState({die1: newDie1, die2: newDie2});
+    }
     render(){
-        // let myNum = function(){
-        //     return Math.floor((Math.random() * 6) + 1);
-        // };
-        let position = "";
-        function toWords() {
-            let myNum = Math.floor((Math.random() * 6) + 1);
-            if (myNum === 1) {
-                position = 'one' 
-            }else if(myNum === 2){
-                position = 'two'
-            }else if(myNum === 3){
-                position = 'three'
-            }else if(myNum === 4){
-                position = 'four'
-            }else if(myNum === 5){
-                position = 'five'
-            }else {
-                position = 'six'
-            }
-        }
-        toWords()
-        function findNum(){
-            toWords();
-        }
         return(
             <div>
-                <Die num = {position}/>
-                <Die num = {position}/>
+                <Die face = {this.state.die1}/>
+                <Die face = {this.state.die2}/>
+                <button onClick={this.roll}>Roll Dice</button>
             </div>
         )
     }
